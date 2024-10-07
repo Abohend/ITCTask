@@ -1,0 +1,72 @@
+﻿@page
+@using Utilities
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h1 class="mb-4">@ViewData["Title"]</h1>
+
+<div class="container py-5">
+    <div class="row">
+        <div class="col-6">
+            <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                <h2>Create a new account.</h2>
+                <hr />
+                <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                <div class="form-item">
+                    <label class="form-label my-3" asp-for="Input.Name">Name<sup>*</sup></label>
+                    <input asp-for="Input.Name" class="form-control border px-2" autocomplete="name" aria-required="true">
+                    <span asp-validation-for="Input.Name" class="text-danger"></span>
+                </div>
+
+                <div class="form-item">
+                    <label class="form-label my-3" asp-for="Input.Address">Address</label>
+                    <input asp-for="Input.Address" class="form-control border px-2" autocomplete="address" aria-required="false">
+                    <span asp-validation-for="Input.Address" class="text-danger"></span>
+                </div>
+
+                <div class="form-item">
+                    <label class="form-label my-3" asp-for="Input.Email">Email<sup>*</sup></label>
+                    <input asp-for="Input.Email" class="form-control border px-2" autocomplete="username" aria-required="true">
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+
+                <div class="form-item">
+                    <label class="form-label my-3" asp-for="Input.Password">Password<sup>*</sup></label>
+                    <input asp-for="Input.Password" class="form-control border px-2" autocomplete="new-password" aria-required="true">
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+
+                <div class="form-item">
+                    <label class="form-label my-3" asp-for="Input.ConfirmPassword">Confirm Password<sup>*</sup></label>
+                    <input asp-for="Input.ConfirmPassword" class="form-control border px-2" autocomplete="new-password" aria-required="true">
+                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                </div>
+
+                @if (User.IsInRole("admin"))
+                {
+                    <div class="form-item">
+                        <label class="form-label my-3">Role<sup>*</sup></label><br />
+                        <div class="form-check form-check-inline">
+                            <input asp-for="Input.Role" class="form-check-input" type="radio" id="inlineCheckbox1" value="admin">
+                            <label class="form-check-label" for="inlineCheckbox1">Admin</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input asp-for="Input.Role" class="form-check-input" type="radio" id="inlineCheckbox2" value="user" checked>
+                            <label class="form-check-label" for="inlineCheckbox2">Editor</label>
+                        </div>
+                    </div>
+                }
+                
+                <div class="row g-4 text-center align-items-center justify-content-center pt-4">
+                    <button id="registerSubmit" type="submit" class=" btn btn-lg btn-primary">Register</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
